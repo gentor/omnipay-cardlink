@@ -1,5 +1,8 @@
 <?php
 
+namespace DigiTickets\Cardlink;
+
+use DigiTickets\Cardlink\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 
 class HostedGateway extends AbstractGateway
