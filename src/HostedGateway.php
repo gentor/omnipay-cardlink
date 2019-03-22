@@ -22,4 +22,13 @@ class HostedGateway extends AbstractGateway
         $parameters['gateway'] = $this;
         return $this->createRequest(PurchaseRequest::class, $parameters);
     }
+
+    public function getDefaultParameters()
+    {
+        return array(
+            'merchantId'  => '',
+            'sharedSecret' => '',
+            'language' => 'en',
+        );
+    }
 }

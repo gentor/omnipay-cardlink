@@ -32,30 +32,28 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     {
         // Build the initial data set.
         // We then calculate the digest and add it to the set.
-        // @TODO: Get all the data for these fields.
+        /**
+         * @var PurchaseRequest $request
+         */
+        $request = $this->getRequest();
         $data = [
-            'mid' => '1234567890',
-            'lang' => 'en',
-            'deviceCategory' => '0',
-            'orderid' => 'XXXXXXXX',
-            'orderDesc' => 'Dev test',
-            'orderAmount' => '0.05',
-            'currency' => 'EUR',
-            'payerEmail' => 'someone@example.com',
-            'payerPhone' => '01234 112233',
-            'billCountry' => 'GB',
-            'billState' => 'Here',
-            'billZip' => 'AA1 1AA',
-            'billCity' => 'Metropolis',
-            'billAddress' => 'Gotham',
-            'reject3dsU' => 'Y',
-            'payMethod' => '',
+            'mid' => $request->getMerchantId(),
+            'lang' => $request->getLanguage(),
+            'orderid' => $request->getTransactionId(),
+            'orderAmount' => $request->getAmount(),
+            'currency' => $request->getCurrency(),
+            'payerEmail' => $request->getCard()->getEmail(),
+            'payerPhone' => $request->getCard()->getBillingPhone(),
+            'billCountry' => $request->getCard()->getBillingCountry(),
+            'billState' => $request->getCard()->getBillingState(),
+            'billZip' => $request->getCard()->getBillingPostcode(),
+            'billCity' => $request->getCard()->getBillingCity(),
+            'billAddress' => $request->getCard()->getBillingAddress1(),
             'trType' => '1',
-            'confirmUrl' => 'success',
-            'cancelUrl' => 'cancel',
+            'confirmUrl' => $request->getReturnUrl(),
+            'cancelUrl' => $request->getCancelUrl(),
         ];
-        // @TODO: Get the shared secret from the purchase request, which in turn gets it from the config.
-        $data['digest'] = $this->determineDigest($data, 'MySecret');
+        $data['digest'] = $this->determineDigest($data, $request->getSharedSecret());
 
         return $data;
     }
