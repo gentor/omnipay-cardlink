@@ -6,13 +6,18 @@ php:
   - 5.6
   - 7.0
   - 7.1
-  - hhvm
+
+env:
+  - SYMFONY_VERSION="2.1" GUZZLE_VERSION="3.1"
+  - SYMFONY_VERSION="2.*" GUZZLE_VERSION="3.1"
+  - SYMFONY_VERSION="2.1" GUZZLE_VERSION="3.*"
+  - SYMFONY_VERSION="2.*" GUZZLE_VERSION="3.*"
 
 before_script:
+  - composer self-update
+  - composer --version
+  - composer require symfony/http-foundation:${SYMFONY_VERSION} --no-update
+  - composer require guzzle/http:${GUZZLE_VERSION} --no-update
   - composer install -n --dev --prefer-source
-  - composer require satooshi/php-coveralls --dev
 
-script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
-
-after_script:
-  - php vendor/bin/coveralls -v
+script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text
