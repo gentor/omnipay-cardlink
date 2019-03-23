@@ -18,6 +18,16 @@ class HostedGateway extends AbstractGateway
         return 'Cardlink (hosted)';
     }
 
+    public function getLanguage()
+    {
+        return $this->getParameter('language');
+    }
+
+    public function setLanguage($value)
+    {
+        return $this->setParameter('language', $value);
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest(PurchaseRequest::class, $parameters);
