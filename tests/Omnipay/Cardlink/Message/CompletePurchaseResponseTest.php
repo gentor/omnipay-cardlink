@@ -51,7 +51,7 @@ class CompletePurchaseResponseTest extends TestCase
     public function testCompletePurchaseSuccess()
     {
         $msg = 'OK, 00 - Approved';
-        $txRef = '123456789';
+        $txRef = '123456';
         $response = new CompletePurchaseResponse(
             $this->completePurchaseRequest,
             [
@@ -64,8 +64,8 @@ class CompletePurchaseResponseTest extends TestCase
                 'message' => $msg,
                 'riskScore' => '0',
                 'payMethod' => 'mastercard',
-                'txId' => $txRef,
-                'paymentRef' => '123456',
+                'txId' => '123456789',
+                'paymentRef' => $txRef,
                 'digest' => 'Svp9WX6D9ASM/0gHvWIAL1PSsC4=',
             ]
         );
