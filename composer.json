@@ -32,6 +32,6 @@
     "mockery/mockery": "~0.8",
     "omnipay/tests": "2.*",
     "phpunit/phpunit": "~3.7.16",
-    "squizlabs/php_codesniffer": "~1.4.4",
+    "squizlabs/php_codesniffer": "~1.4.4"
   }
 }
