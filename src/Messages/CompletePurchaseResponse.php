@@ -50,7 +50,11 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function getMessage()
     {
-        return $this->digestIsValid ? (isset($this->data['message']) ? $this->data['message'] : null) : 'Digest is not valid';
+        return $this->digestIsValid
+            ?
+            (isset($this->data['message']) ? $this->data['message'] : null)
+            :
+            'Digest is not valid';
     }
 
     public function getAuthCode()
