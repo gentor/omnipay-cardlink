@@ -23,6 +23,9 @@ class CompletePurchaseResponseTest extends TestCase
         $this->completePurchaseRequest = $gateway->completePurchase([]);
     }
 
+    /**
+     * This tests the provider sending back a message saying the purchase was canceled.
+     */
     public function testCompletePurchaseCancel()
     {
         $msg = 'Failed, user canceled';
@@ -48,6 +51,9 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertNull($response->getAuthCode());
     }
 
+    /**
+     * This tests the provider sending back a message saying the purchase was successful.
+     */
     public function testCompletePurchaseSuccess()
     {
         $msg = 'OK, 00 - Approved';
@@ -73,6 +79,36 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertFalse($response->isCancelled());
         $this->assertEquals($msg, $response->getMessage());
         $this->assertEquals($txRef, $response->getTransactionReference());
+        $this->assertNull($response->getAuthCode());
+    }
+
+    /**
+     * This tests a hacker trying to pretend to be the provider sending back a message saying the purchase was
+     * successful.
+     */
+    public function testCompletePurchaseInvalidDigest()
+    {
+        $response = new CompletePurchaseResponse(
+            $this->completePurchaseRequest,
+            [
+                'mid' => '5678',
+                'orderid' => 'DEF456',
+                'status' => 'CAPTURED',
+                'orderAmount' => '0.03',
+                'currency' => 'EUR',
+                'paymentTotal' => '0.03',
+                'message' => 'OK, 00 - Approved',
+                'riskScore' => '0',
+                'payMethod' => 'mastercard',
+                'txId' => '987654321',
+                'paymentRef' => '654321',
+                'digest' => 'TryingToSpoofIt=',
+            ]
+        );
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isCancelled());
+        $this->assertEquals('Digest is not valid', $response->getMessage());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getAuthCode());
     }
 }
