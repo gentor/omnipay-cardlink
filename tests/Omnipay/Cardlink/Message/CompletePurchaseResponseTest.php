@@ -57,7 +57,7 @@ class CompletePurchaseResponseTest extends TestCase
             [
                 'mid' => '1234',
                 'orderid' => 'ABC123',
-                'status' => 'CANCELED',
+                'status' => 'CAPTURED',
                 'orderAmount' => '0.03',
                 'currency' => 'EUR',
                 'paymentTotal' => '0.03',
