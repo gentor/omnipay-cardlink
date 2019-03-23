@@ -4,6 +4,7 @@ namespace Omnipay\Cardlink;
 
 use DigiTickets\Cardlink\HostedGateway;
 use Omnipay\Common\CreditCard;
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -41,8 +42,14 @@ class GatewayTest extends GatewayTestCase
         foreach ($this->options as $removeOption) {
             $testOptions = $this->options;
             unset($testOptions[$removeOption]);
-            $this->expectException('\Omnipay\Common\Exception\InvalidRequestException');
-            $this->gateway->purchase($testOptions);
+            // We have to check that it does throw an exception, and therefore doesn't
+            // go the "assert true is false" line.
+            try {
+                $this->gateway->purchase($testOptions)->send();
+                $this->assertTrue(false, 'Missing "'.$removeOption.'" should throw an exception in send');
+            } catch(InvalidRequestException $e) {
+                $this->assertTrue(true);
+            }
         }
     }
 
