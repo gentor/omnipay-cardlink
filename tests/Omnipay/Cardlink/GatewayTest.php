@@ -71,12 +71,13 @@ class GatewayTest extends GatewayTestCase
         $this->assertEquals('1', $redirectData['trType']);
         $this->assertEquals($this->options['returnUrl'], $redirectData['confirmUrl']);
         $this->assertEquals($this->options['cancelUrl'], $redirectData['cancelUrl']);
-        $this->assertEquals($this->options->getCard()->getEmail(), $redirectData['payerEmail']);
-        $this->assertEquals($this->options->getCard()->getBillingPhone(), $redirectData['payerPhone']);
-        $this->assertEquals($this->options->getCard()->getBillingCountry(), $redirectData['billCountry']);
-        $this->assertEquals($this->options->getCard()->getBillingState(), $redirectData['billState']);
-        $this->assertEquals($this->options->getCard()->getBillingPostcode(), $redirectData['billZip']);
-        $this->assertEquals($this->options->getCard()->getBillingCity(), $redirectData['billCity']);
-        $this->assertEquals($this->options->getCard()->getBillingAddress1(), $redirectData['billAddress']);
+        $card = $this->options['card'];
+        $this->assertEquals($card->getEmail(), $redirectData['payerEmail']);
+        $this->assertEquals($card->getBillingPhone(), $redirectData['payerPhone']);
+        $this->assertEquals($card->getBillingCountry(), $redirectData['billCountry']);
+        $this->assertEquals($card->getBillingState(), $redirectData['billState']);
+        $this->assertEquals($card->getBillingPostcode(), $redirectData['billZip']);
+        $this->assertEquals($card->getBillingCity(), $redirectData['billCity']);
+        $this->assertEquals($card->getBillingAddress1(), $redirectData['billAddress']);
     }
 }
