@@ -29,7 +29,8 @@ class CompletePurchaseResponse extends AbstractResponse
          * @var CompletePurchaseRequest $request
          */
         $digest = DigestCalculator::calculate($data, $request->getSharedSecret());
-echo 'Response digest is: '.$digest;
+        // @TODO: Remove this line.
+        echo 'Response digest for message "'.$data['message'].'" is: '.$digest;
         $this->digestIsValid = isset($data['digest']) && $data['digest'] == $digest;
     }
 
