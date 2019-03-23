@@ -4,9 +4,9 @@ namespace Omnipay\Cardlink;
 
 use DigiTickets\Cardlink\lib\DigestCalculator;
 use Omnipay\Common\CreditCard;
-use Omnipay\Tests\GatewayTestCase;
+use Omnipay\Tests\TestCase;
 
-class DigestTest extends GatewayTestCase
+class DigestTest extends TestCase
 {
     public function testDigest()
     {
