@@ -38,7 +38,7 @@ class CompletePurchaseResponseTest extends TestCase
                 'message' => $msg,
                 'riskScore' => '',
                 'txId' => '123456789',
-                'digest' => 'JKBvM8/ABTOX9SvMVYZAQqOUyyw=',
+                'digest' => 'gvTEdfBkqUOuHA3Dl5xEDmxNf0s=',
             ]
         );
         $this->assertFalse($response->isSuccessful());
@@ -66,7 +66,7 @@ class CompletePurchaseResponseTest extends TestCase
                 'payMethod' => 'mastercard',
                 'txId' => $txRef,
                 'paymentRef' => '123456',
-                'digest' => 'JKBvM8/ABTOX9SvMVYZAQqOUyyw=',
+                'digest' => 'LpoxcIekmjWgcWGPU/QqYNFUaIY=',
             ]
         );
         $this->assertTrue($response->isSuccessful());

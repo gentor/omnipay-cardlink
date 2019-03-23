@@ -35,24 +35,6 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
-    public function testMandatoryParameters()
-    {
-        // Loop through the options, and for each one, clone the options and remove that one from the clone, then
-        // try to create a purchase request.
-        foreach ($this->options as $removeOption) {
-            $testOptions = $this->options;
-            unset($testOptions[$removeOption]);
-            // We have to check that it does throw an exception, and therefore doesn't
-            // go the "assert true is false" line.
-            try {
-                $this->gateway->purchase($testOptions)->send();
-                $this->assertTrue(false, 'Missing "'.$removeOption.'" should throw an exception in send');
-            } catch(InvalidRequestException $e) {
-                $this->assertTrue(true);
-            }
-        }
-    }
-
     public function testPurchase()
     {
         $response = $this->gateway->purchase($this->options)->send();
