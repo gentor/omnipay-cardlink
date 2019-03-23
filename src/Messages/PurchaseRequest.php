@@ -14,8 +14,9 @@ class PurchaseRequest extends AbstractRequest
 
     public function setMerchantId($value)
     {
-        // This is so that we can test whether this parameter has been supplied, but output a friendly name ("merchantId)
-        // to the outside world, instead of the internal name ("mid"). See the call to validate() in getData() below.
+        // This is so that we can test whether this parameter has been supplied, but output a friendly name
+        // ("merchantId) to the outside world, instead of the internal name ("mid"). See the call to validate() in
+        // getData() below.
         $this->setParameter('merchantId', $value);
 
         return $this->setParameter('mid', $value);
