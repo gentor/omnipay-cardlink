@@ -3,7 +3,6 @@
 namespace Omnipay\Cardlink;
 
 use DigiTickets\Cardlink\HostedGateway;
-use DigiTickets\Cardlink\Messages\PurchaseResponse;
 use Omnipay\Common\CreditCard;
 use Omnipay\Tests\GatewayTestCase;
 
@@ -30,7 +29,7 @@ class GatewayTest extends GatewayTestCase
     {
         $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf(PurchaseResponse::class, $response);
+        $this->assertInstanceOf('\DigiTickets\Cardlink\Messages\PurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
     }
