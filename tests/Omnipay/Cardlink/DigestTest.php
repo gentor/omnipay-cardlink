@@ -14,7 +14,14 @@ class DigestTest extends TestCase
             'one' => 'one',
             'two' => 'two'
         ];
+        $expectedDigest = '2PyXWhzQtfX4tLJEVHKx5C8wnQk=';
 
-        $this->assertEquals('2PyXWhzQtfX4tLJEVHKx5C8wnQk=', DigestCalculator::calculate($data, 'xyz'));
+        // Try without a "digest" element.
+        $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, 'xyz'));
+
+        $data['digest'] = $expectedDigest;
+
+        // Try with a "digest" element - should get same answer.
+        $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, 'xyz'));
     }
 }
