@@ -45,7 +45,15 @@ class PurchaseRequest extends AbstractRequest
     public function getData()
     {
         // Check that the essential data values are present.
-        $this->validate('merchantId', 'sharedSecret', 'transactionId', 'amount', 'currency');
+        $this->validate(
+            'merchantId',
+            'sharedSecret',
+            'transactionId',
+            'amount',
+            'currency',
+            'returnUrl',
+            'cancelUrl'
+        );
 
         return null; // There isn't any data!
     }

@@ -4,7 +4,7 @@ namespace DigiTickets\Cardlink\lib;
 
 class DigestCalculator
 {
-    public static function calculate(array $data, string $sharedSecret)
+    public static function calculate($data, $sharedSecret)
     {
         // This is a fairly "dumb" method, but it's in line with how the digest is supposed to be calculated.
         // First, make sure there is no digest element in the data values we're going to work on.
