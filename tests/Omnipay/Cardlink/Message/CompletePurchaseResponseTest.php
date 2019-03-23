@@ -66,7 +66,7 @@ class CompletePurchaseResponseTest extends TestCase
                 'payMethod' => 'mastercard',
                 'txId' => $txRef,
                 'paymentRef' => '123456',
-                'digest' => 'LpoxcIekmjWgcWGPU/QqYNFUaIY=',
+                'digest' => 'Svp9WX6D9ASM/0gHvWIAL1PSsC4=',
             ]
         );
         $this->assertTrue($response->isSuccessful());
