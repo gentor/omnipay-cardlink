@@ -2,6 +2,7 @@
 
 namespace DigiTickets\Cardlink;
 
+use DigiTickets\Cardlink\Messages\CompletePurchaseRequest;
 use DigiTickets\Cardlink\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 
@@ -21,6 +22,11 @@ class HostedGateway extends AbstractGateway
     {
         $parameters['gateway'] = $this;
         return $this->createRequest(PurchaseRequest::class, $parameters);
+    }
+
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
     }
 
     public function getDefaultParameters()
