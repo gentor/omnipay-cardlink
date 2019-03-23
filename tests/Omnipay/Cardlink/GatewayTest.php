@@ -16,7 +16,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new HostedGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'mid' => '1234',
+            'merchantId' => '1234',
             'sharedSecret' => 'nottellingyou',
             'currency' => 'EUR',
             'amount' => '10.00',

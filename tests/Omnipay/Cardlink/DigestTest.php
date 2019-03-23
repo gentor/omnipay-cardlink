@@ -15,6 +15,6 @@ class DigestTest extends TestCase
             'two' => 'two'
         ];
 
-        $this->assertEquals('123456', DigestCalculator::calculate($data, 'xyz'));
+        $this->assertEquals('2PyXWhzQtfX4tLJEVHKx5C8wnQk=', DigestCalculator::calculate($data, 'xyz'));
     }
 }
