@@ -7,6 +7,9 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
+    const TEST_ENDPOINT = 'https://euro.test.modirum.com/vpos/shophandlermpi';
+    const LIVE_ENDPOINT = 'https://TBC';
+
     public function isSuccessful()
     {
         return false;
@@ -19,8 +22,13 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getRedirectUrl()
     {
-        // @TODO: This depends on whether it's a live or test transaction.
-        return 'https://euro.test.modirum.com/vpos/shophandlermpi';
+        // The URL depends on whether it's a live or test transaction.
+        /**
+         * @var PurchaseRequest $request
+         */
+        $request = $this->getRequest();
+
+        return $request->getTestMode() ? self::TEST_ENDPOINT : self::LIVE_ENDPOINT;
     }
 
     public function getRedirectMethod()
@@ -61,8 +69,8 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     private function determineDigest($data, $sharedSecret)
     {
         // This is a fairly "dumb" method, but it's in line with how the digest is supposed to be calculated.
-        // Take all the data values, join them together, append the shared secret, obfuscate the result and that's
-        // the digest.
+        // Take all the data values, join them together, append the shared secret, encode the result and that's
+        // the digest!
         $digestData = implode('', $data).$sharedSecret;
         $digest = base64_encode(sha1(utf8_encode($digestData), true));
 
