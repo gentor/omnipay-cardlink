@@ -20,7 +20,6 @@ class HostedGateway extends AbstractGateway
 
     public function purchase(array $parameters = array())
     {
-        $parameters['gateway'] = $this;
         return $this->createRequest(PurchaseRequest::class, $parameters);
     }
 
