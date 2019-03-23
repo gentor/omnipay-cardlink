@@ -31,8 +31,6 @@ class HostedGateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'merchantId'  => '',
-            'sharedSecret' => '',
             'language' => 'en',
         );
     }
