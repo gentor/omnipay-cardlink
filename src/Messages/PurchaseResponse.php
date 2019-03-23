@@ -2,6 +2,7 @@
 
 namespace DigiTickets\Cardlink\Messages;
 
+use DigiTickets\Cardlink\lib\DigestCalculator;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
@@ -61,19 +62,8 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
             'confirmUrl' => $request->getReturnUrl(),
             'cancelUrl' => $request->getCancelUrl(),
         ];
-        $data['digest'] = $this->determineDigest($data, $request->getSharedSecret());
+        $data['digest'] = DigestCalculator::calculate($data, $request->getSharedSecret());
 
         return $data;
-    }
-
-    private function determineDigest($data, $sharedSecret)
-    {
-        // This is a fairly "dumb" method, but it's in line with how the digest is supposed to be calculated.
-        // Take all the data values, join them together, append the shared secret, encode the result and that's
-        // the digest!
-        $digestData = implode('', $data).$sharedSecret;
-        $digest = base64_encode(sha1(utf8_encode($digestData), true));
-
-        return $digest;
     }
 }

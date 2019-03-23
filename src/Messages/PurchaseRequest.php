@@ -39,13 +39,11 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        // @TODO: Implement getData() method.
+        return null; // There isn't any data!
     }
 
     public function sendData($data)
     {
-        // @TODO: Implement sendData() method.
-        $responseTBC = null;
-        return $this->response = new PurchaseResponse($this, $responseTBC);
+        return $this->response = new PurchaseResponse($this, null);
     }
 }

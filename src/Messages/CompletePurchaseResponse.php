@@ -2,7 +2,9 @@
 
 namespace DigiTickets\Cardlink\Messages;
 
+use DigiTickets\Cardlink\lib\DigestCalculator;
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 class CompletePurchaseResponse extends AbstractResponse
 {
@@ -13,29 +15,46 @@ class CompletePurchaseResponse extends AbstractResponse
     const STATUS_REFUSED = 'REFUSED';
     const STATUS_ERROR = 'ERROR';
 
+    /**
+     * @var bool $digestIsValid
+     */
+    private $digestIsValid = false;
+
+    public function __construct(RequestInterface $request, $data)
+    {
+        parent::__construct($request, $data);
+
+        // Determine whether the digest is valid.
+        /**
+         * @var CompletePurchaseRequest $request
+         */
+        $digest = DigestCalculator::calculate($data, $request->getSharedSecret());
+        $this->digestIsValid = isset($data['digest']) && $data['digest'] == $digest;
+    }
+
     public function isSuccessful()
     {
-        return isset($this->data['status']) &&
+        return $this->digestIsValid && isset($this->data['status']) &&
             (self::STATUS_AUTHORIZED === $this->data['status'] || self::STATUS_CAPTURED === $this->data['status']);
     }
 
     public function isCancelled()
     {
-        return isset($this->data['status']) && self::STATUS_CANCELED !== $this->data['status'];
+        return $this->digestIsValid && isset($this->data['status']) && self::STATUS_CANCELED === $this->data['status'];
     }
 
     public function getTransactionReference()
     {
-        return isset($this->data['paymentRef']) ? $this->data['paymentRef'] : null;
+        return $this->digestIsValid && isset($this->data['paymentRef']) ? $this->data['paymentRef'] : null;
     }
 
     public function getMessage()
     {
-        return isset($this->data['message']) ? $this->data['message'] : null;
+        return $this->digestIsValid ? (isset($this->data['message']) ? $this->data['message'] : null) : 'Digest is not valid';
     }
 
     public function getAuthCode()
     {
-        return isset($this->data['authCode']) ? $this->data['authCode'] : null;
+        return null;
     }
 }
