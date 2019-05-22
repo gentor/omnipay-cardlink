@@ -9,7 +9,7 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     const TEST_ENDPOINT = 'https://euro.test.modirum.com/vpos/shophandlermpi';
-    const LIVE_ENDPOINT = 'https://TBC';
+    const LIVE_ENDPOINT = 'https://vpos.eurocommerce.gr/vpos/shophandlermpi';
 
     public function isSuccessful()
     {
