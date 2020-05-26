@@ -12,9 +12,15 @@ class DigestCalculator
 
         // Now take all the data values, join them together, append the shared secret, encode the result and that's
         // the digest!
-        $digestData = implode('', $data).$sharedSecret;
-        $digest = base64_encode(sha1(utf8_encode($digestData), true));
 
-        return $digest;
+        return base64_encode(
+            hash(
+                'sha256',
+                utf8_encode(
+                    implode('', $data).$sharedSecret
+                ),
+                true
+            )
+        );
     }
 }
