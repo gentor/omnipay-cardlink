@@ -10,6 +10,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 {
     const TEST_ENDPOINT = 'https://euro.test.modirum.com/vpos/shophandlermpi';
     const LIVE_ENDPOINT = 'https://vpos.eurocommerce.gr/vpos/shophandlermpi';
+    const VERSION = 2;
 
     public function isSuccessful()
     {
@@ -46,9 +47,11 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
          */
         $request = $this->getRequest();
         $data = [
+            'version' => self::VERSION,
             'mid' => $request->getMerchantId(),
             'lang' => $request->getLanguage(),
             'orderid' => $request->getTransactionId(),
+            'orderDesc' =>  $request->getTransactionId(),
             'orderAmount' => $request->getAmount(),
             'currency' => $request->getCurrency(),
             'payerEmail' => $request->getCard()->getEmail(),
