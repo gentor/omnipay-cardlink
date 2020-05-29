@@ -12,7 +12,6 @@ class DigestCalculator
 
         // Now take all the data values, join them together, append the shared secret, encode the result and that's
         // the digest!
-
         return base64_encode(
             hash(
                 'sha256',
