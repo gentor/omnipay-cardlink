@@ -39,29 +39,29 @@ class DigestTest extends TestCase
         $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, self::SECRET_KEY));
     }
 
-    public function testDigestWithGreekChar() {
+    public function testWorkingRequest()
+    {
+        $data = [
+            "version" => "2",
+            "mid" => "0020893996",
+            "lang" => "el",
+            "deviceategory" => "0",
+            "orderid" => "O200623145349",
+            "orderDesc" => "Test",
+            "orderAmount" => "1",
+            "currency" => "EUR",
+            "payerEmail" => "demo@modirum.com",
+            "payerPhone" => "",
+            "billCountry" => "GR",
+            "billState" => "ATH",
+            "billZip" => "118 52",
+            "billCity" => "Αθήνα",
+            "billAddress" => "Μαρίνου Αντύπα",
+            "confirmUrl" => "https://euro.test.modirum.com/vpostestsv4/shops/shopdemo.jsp?cmd=confirm",
+            "cancelUrl" => "https://euro.test.modirum.com/vpostestsv4/shops/shopdemo.jsp?cmd=cancel",
+        ];
 
-          $data = [
-              'version' => '2',
-              'mid' => '0020893996',
-              'lang' => 'en',
-              'orderid' => 'DNRX3BJ1x944',
-              'orderDesc' => 'DNRX3BJ1x944',
-              'orderAmount' =>'12.00',
-              'currency' =>'EUR',
-              'payerEmail' => 'henryk.kwak@gmail.com',
-              'payerPhone' =>'',
-              'billCountry' =>'GR',
-              'billState' =>'',
-              'billZip' => '118 52',
-              'billCity' =>'Αθήνα',
-              'billAddress' =>'3',
-              'trType' =>'1',
-              'confirmUrl' =>'http://henryk.digitickets.test/payment-callback/f/DNRX3BJ1x944',
-              'cancelUrl' =>'http://henryk.digitickets.test/payment-callback/f/DNRX3BJ1x944',
-          ];
-
-        $expectedDigest = 'THI0toWE2s1zQkKqhLqCbNyyz/Oe2QE2wNSpH6DR8Lo=';
+        $expectedDigest = "rI8zdYSJnNIRxsVtfVvbO3pUoR1+1PZR4ohnAkzhVTE=";
 
         // Try without a 'digest' element.
         $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, self::SECRET_KEY));
@@ -70,6 +70,5 @@ class DigestTest extends TestCase
 
         // Try with a 'digest' element - should get same answer.
         $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, self::SECRET_KEY));
-
     }
 }

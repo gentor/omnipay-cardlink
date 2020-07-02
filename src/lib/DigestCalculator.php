@@ -15,9 +15,7 @@ class DigestCalculator
         return base64_encode(
             hash(
                 'sha256',
-                utf8_encode(
-                    implode('', $data).$sharedSecret
-                ),
+                implode('', $data).$sharedSecret,
                 true
             )
         );
