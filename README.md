@@ -13,6 +13,8 @@ Omnipay implementation of the Cardlink payment gateway.
 
 **Important: Driver requires [PHP's Intl extension](http://php.net/manual/en/book.intl.php) and [PHP's SOAP extension](http://php.net/manual/en/book.soap.php) to be installed.**
 
+**All payment details sent to the Payment Gateway must be UTF-8 encoded.**
+
 The Cardlink Omnipay driver is installed via [Composer](http://getcomposer.org/). To install, simply add it
 to your `composer.json` file:
 

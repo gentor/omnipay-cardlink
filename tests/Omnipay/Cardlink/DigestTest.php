@@ -30,12 +30,45 @@ class DigestTest extends TestCase
 
         $expectedDigest = 'Xw19+XA5lQXbzEHvvFYe1Zrm7N+rvpdIvzuIyM9HY3Q=';
 
-        // Try without a "digest" element.
+        // Try without a 'digest' element.
         $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, self::SECRET_KEY));
 
         $data['digest'] = $expectedDigest;
 
-        // Try with a "digest" element - should get same answer.
+        // Try with a 'digest' element - should get same answer.
+        $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, self::SECRET_KEY));
+    }
+
+    public function testWorkingRequest()
+    {
+        $data = [
+            "version" => "2",
+            "mid" => "0020893996",
+            "lang" => "el",
+            "deviceategory" => "0",
+            "orderid" => "O200623145349",
+            "orderDesc" => "Test",
+            "orderAmount" => "1",
+            "currency" => "EUR",
+            "payerEmail" => "demo@modirum.com",
+            "payerPhone" => "",
+            "billCountry" => "GR",
+            "billState" => "ATH",
+            "billZip" => "118 52",
+            "billCity" => "Αθήνα",
+            "billAddress" => "Μαρίνου Αντύπα",
+            "confirmUrl" => "https://euro.test.modirum.com/vpostestsv4/shops/shopdemo.jsp?cmd=confirm",
+            "cancelUrl" => "https://euro.test.modirum.com/vpostestsv4/shops/shopdemo.jsp?cmd=cancel",
+        ];
+
+        $expectedDigest = "rI8zdYSJnNIRxsVtfVvbO3pUoR1+1PZR4ohnAkzhVTE=";
+
+        // Try without a 'digest' element.
+        $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, self::SECRET_KEY));
+
+        $data['digest'] = $expectedDigest;
+
+        // Try with a 'digest' element - should get same answer.
         $this->assertEquals($expectedDigest, DigestCalculator::calculate($data, self::SECRET_KEY));
     }
 }
