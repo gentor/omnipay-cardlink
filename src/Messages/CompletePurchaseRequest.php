@@ -1,6 +1,6 @@
 <?php
 
-namespace DigiTickets\Cardlink\Messages;
+namespace Omnipay\Cardlink\Messages;
 
 class CompletePurchaseRequest extends PurchaseRequest
 {

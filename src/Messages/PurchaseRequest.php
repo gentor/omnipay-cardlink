@@ -1,6 +1,6 @@
 <?php
 
-namespace DigiTickets\Cardlink\Messages;
+namespace Omnipay\Cardlink\Messages;
 
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\ResponseInterface;

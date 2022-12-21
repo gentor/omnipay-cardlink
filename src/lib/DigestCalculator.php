@@ -1,6 +1,6 @@
 <?php
 
-namespace DigiTickets\Cardlink\lib;
+namespace Omnipay\Cardlink\lib;
 
 class DigestCalculator
 {

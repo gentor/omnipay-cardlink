@@ -1,8 +1,8 @@
 <?php
 
-namespace DigiTickets\Cardlink\Messages;
+namespace Omnipay\Cardlink\Messages;
 
-use DigiTickets\Cardlink\lib\DigestCalculator;
+use Omnipay\Cardlink\lib\DigestCalculator;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
