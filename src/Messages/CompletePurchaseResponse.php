@@ -22,15 +22,17 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function __construct(RequestInterface $request, $data)
     {
+        // TODO: Fix this
+        unset($data['query_trace']);
+
         parent::__construct($request, $data);
 
         // Determine whether the digest is valid.
         /**
          * @var CompletePurchaseRequest $request
          */
+
         $digest = DigestCalculator::calculate($data, $request->getSharedSecret());
-        // @TODO: Remove this line.
-        echo 'Response digest for message "'.$data['message'].'" is: '.$digest;
         $this->digestIsValid = isset($data['digest']) && $data['digest'] == $digest;
     }
 
@@ -47,7 +49,8 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function getTransactionReference()
     {
-        return $this->digestIsValid && isset($this->data['paymentRef']) ? $this->data['paymentRef'] : null;
+        return $this->digestIsValid && isset($this->data['paymentRef']) ?
+            $this->data['paymentRef'] : $this->data['txId'] ?? null;
     }
 
     public function getMessage()

@@ -2,6 +2,8 @@
 
 namespace Omnipay\Cardlink\Messages;
 
+use Omnipay\Cardlink\Gateway;
+use Omnipay\Cardlink\lib\DigestCalculator;
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\ResponseInterface;
 
@@ -32,6 +34,24 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('sharedSecret', $value);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getEndPoint()
+    {
+        return $this->getParameter('endpoint') ?:
+            $this->getTestMode() ? Gateway::TEST_ENDPOINT : Gateway::LIVE_ENDPOINT;
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function setEndPoint($value)
+    {
+        return $this->setParameter('endpoint', $value);
+    }
+
     public function getLanguage()
     {
         return $this->getParameter('language');
@@ -52,10 +72,32 @@ class PurchaseRequest extends AbstractRequest
             'amount',
             'currency',
             'returnUrl',
-            'cancelUrl'
+            'cancelUrl',
+            'card',
         );
 
-        return null; // There isn't any data!
+        $data = [
+            'version' => Gateway::VERSION,
+            'mid' => $this->getMerchantId(),
+            'lang' => $this->getLanguage(),
+            'orderid' => $this->getTransactionId(),
+            'orderDesc' => $this->getDescription() ?: $this->getTransactionId(),
+            'orderAmount' => $this->getAmount(),
+            'currency' => $this->getCurrency(),
+            'payerEmail' => $this->getCard()->getEmail(),
+            'payerPhone' => $this->getCard()->getBillingPhone(),
+            'billCountry' => $this->getCard()->getBillingCountry(),
+            'billState' => $this->getCard()->getBillingState(),
+            'billZip' => $this->getCard()->getBillingPostcode(),
+            'billCity' => $this->getCard()->getBillingCity(),
+            'billAddress' => $this->getCard()->getBillingAddress1(),
+            'trType' => '1',
+            'confirmUrl' => $this->getReturnUrl(),
+            'cancelUrl' => $this->getCancelUrl(),
+        ];
+        $data['digest'] = DigestCalculator::calculate($data, $this->getSharedSecret());
+
+        return $data;
     }
 
     public function sendData($data)
